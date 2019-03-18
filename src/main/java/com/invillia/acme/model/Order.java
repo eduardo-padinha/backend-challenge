@@ -2,25 +2,46 @@ package com.invillia.acme.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "order_table")
 public class Order {
 	
+	@Id
+	@GeneratedValue(strategy= GenerationType.AUTO)
 	private int id;
+	
+	@Column(name="address")
 	private String address;
+	
+	@Column(name="confirmationDate")
 	private long confirmationDate;
+	
+	@Column(name="orderStatus")
 	private String status;
+	
 	private List<OrderItem> orderItems;
 	private Payment payment;
 	
 	public Order() {}
 	
-	public Order(int id, String address, long confirmationDate, String status, List<OrderItem> orderItems, 
-			Payment payment) {
+	public Order(String address, long confirmationDate, String status) {
+		this.setAddress(address);
+		this.setConfirmationDate(confirmationDate);
+		this.setStatus(status);
+	}
+	
+	public Order(int id, String address, long confirmationDate, String status) {
 		this.setId(id);
 		this.setAddress(address);
 		this.setConfirmationDate(confirmationDate);
 		this.setStatus(status);
-		this.setOrderItems(orderItems);
-		this.setPayment(payment);
 	}
 	
 	public int getId() {

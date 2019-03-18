@@ -47,11 +47,11 @@ public class StoreData {
      * Used to create a new store and register on BD
      * 
      * @param newStore New order to be created on BD
-     * @return Returns TRUE if success or FALSE if it fails
+     * @return Returns the created Store
      */
-    public boolean createNewStore(Store newStore) {
+    public Store createNewStore(Store newStore) {
         storesList.add(newStore);
-        return true;
+        return newStore;
     }
     
     /**

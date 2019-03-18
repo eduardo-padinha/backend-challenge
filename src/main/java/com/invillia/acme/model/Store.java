@@ -1,12 +1,32 @@
 package com.invillia.acme.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "store_table")
 public class Store {
 
+	@Id
+	@GeneratedValue(strategy= GenerationType.AUTO)
 	private int id;
+	
+	@Column(name="storeName")
 	private String name;
+	
+	@Column(name="address")
 	private String address;
 	
 	public Store() {}
+	
+	public Store(String name, String address) {
+		this.setName(name);
+		this.setAddress(address);
+	}
 	
 	public Store(int id, String name, String address) {
 		this.setId(id);

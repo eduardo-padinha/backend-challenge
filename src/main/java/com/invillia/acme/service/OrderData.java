@@ -24,11 +24,11 @@ public class OrderData {
 	
 	public OrderData() {
 		ordersList = new ArrayList<Order>();
-		ordersList.add(new Order(1, "Endereço 1", (new Date()).getTime(), "Processando", new ArrayList<OrderItem>(), new Payment()));
-		ordersList.add(new Order(2, "Endereço 2", (new Date()).getTime(), "Cancelado", new ArrayList<OrderItem>(), new Payment()));
-		ordersList.add(new Order(3, "Endereço 3", (new Date()).getTime(), "Concluido", new ArrayList<OrderItem>(), new Payment()));
-		ordersList.add(new Order(4, "Endereço 4", (new Date()).getTime(), "Concluido", new ArrayList<OrderItem>(), new Payment()));
-		ordersList.add(new Order(5, "Endereço 5", (new Date()).getTime(), "Processando", new ArrayList<OrderItem>(), new Payment()));
+		ordersList.add(new Order(1, "Endereço 1", (new Date()).getTime(), "Processando"));
+		ordersList.add(new Order(2, "Endereço 2", (new Date()).getTime(), "Cancelado"));
+		ordersList.add(new Order(3, "Endereço 3", (new Date()).getTime(), "Concluido"));
+		ordersList.add(new Order(4, "Endereço 4", (new Date()).getTime(), "Concluido"));
+		ordersList.add(new Order(5, "Endereço 5", (new Date()).getTime(), "Processando"));
 	}
 	
 	/**
@@ -51,11 +51,11 @@ public class OrderData {
      * Used to create a new order and register on BD
      * 
      * @param newOrder New order to be created on BD
-     * @return Returns TRUE if success or FALSE if it fails
+     * @return Returns The created order
      */
-    public boolean createNewOrder(Order newOrder) {
+    public Order createNewOrder(Order newOrder) {
         ordersList.add(newOrder);
-        return true;
+        return newOrder;
     }
     
     /**

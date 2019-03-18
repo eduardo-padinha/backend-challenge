@@ -1,14 +1,39 @@
 package com.invillia.acme.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "orderItem_table")
 public class OrderItem {
 
+	@Id
+	@GeneratedValue(strategy= GenerationType.AUTO)
 	private int id;
+	
+	@Column(name="description")
 	private String description;
+	
+	@Column(name="unitPrice")
 	private double unitPrice;
+	
+	@Column(name="quantity")
 	private int quantity;
+	
 	private Payment payment;
 	
 	public OrderItem() {}
+	
+	public OrderItem(String description, double unitPrice, int quantity, Payment payment) {
+		this.setDescription(description);
+		this.setUnitPrice(unitPrice);
+		this.setQuantity(quantity);
+		this.setPayment(payment);
+	}
 	
 	public OrderItem(int id, String description, double unitPrice, int quantity, Payment payment) {
 		this.setId(id);
