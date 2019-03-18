@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.invillia.acme.model.Order;
+import com.invillia.acme.model.MvpOrder;
 import com.invillia.acme.model.Payment;
 import com.invillia.acme.service.OrderData;
 
@@ -21,23 +21,23 @@ public class OrderController {
 	}
 
 	@GetMapping("/order/{id}")
-    public Order getStoreById(@PathVariable String id){
+    public MvpOrder getStoreById(@PathVariable String id){
         int orderId = Integer.parseInt(id);
         return OrderData.getInstance().getOrderById(orderId);
     }
 
     @PostMapping("/order")
-    public Order createOrder(@RequestBody Order body){
+    public MvpOrder createOrder(@RequestBody MvpOrder body){
         return OrderData.getInstance().createNewOrder(body);
     }
 
     @PutMapping("/order/{id}")
-    public Order createOrderPayment(@PathVariable String id, @RequestBody Payment body){
+    public Payment createOrderPayment(@PathVariable String id, @RequestBody Payment body){
         return OrderData.getInstance().createPaymentForAnOrder(body, Integer.parseInt(id));
     }
 
     @PutMapping("/order/{id}/refund")
-    public Order refundOrder(@PathVariable String id){
+    public MvpOrder refundOrder(@PathVariable String id){
         return OrderData.getInstance().refundOrder(Integer.parseInt(id));
     }
 	

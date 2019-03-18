@@ -1,8 +1,10 @@
 package com.invillia.acme.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.invillia.acme.dao.StoreDaoImpl;
 import com.invillia.acme.model.Store;
 
 public class StoreData {
@@ -34,12 +36,14 @@ public class StoreData {
 	 * @return A single store that has the same passed id
 	 */
     public Store getStoreById(int id) {
-        for(Store store: storesList) {
-            if(store.getId() == id) {
-                return store;
-            }
-        }
-        return null;
+    	Store result = null;
+		try {
+			result = StoreDaoImpl.getStoreById(id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
     }
 
     /**
@@ -50,8 +54,13 @@ public class StoreData {
      * @return Returns the created Store
      */
     public Store createNewStore(Store newStore) {
-        storesList.add(newStore);
-        return newStore;
+    	try {
+    		StoreDaoImpl.createNewStore(newStore);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return newStore;
     }
     
     /**
@@ -63,17 +72,13 @@ public class StoreData {
      * @return The modified order
      */
     public Store updateStore(Store modifiedStore) {
-    	for(Store store: storesList) {
-            if(store.getId() == modifiedStore.getId()) {
-                int storeIndex = storesList.indexOf(store);
-                store.setAddress(modifiedStore.getAddress());
-                store.setName(modifiedStore.getName());
-                storesList.set(storeIndex, store);
-                return store;
-            }
-
-        }
+    	try {
+			StoreDaoImpl.updateStore(modifiedStore);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
-    	return null;
+    	return modifiedStore;
     }
 }

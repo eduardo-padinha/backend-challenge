@@ -1,35 +1,27 @@
 package com.invillia.acme.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "payment_table")
 public class Payment {
 
-	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
 	private int id;
 	
-	@Column(name="status")
 	private String status;
 	
-	@Column(name="creditCardNumber")
 	private long creditCardNumber;
 	
-	@Column(name="paymentDate")
 	private long paymentDate;
+	
+	private int orderId;
+	
+	private int orderItemId;
 	
 	public Payment() {}
 	
-	public Payment(String status, long creditCardNumber, long paymentDate) {
+	public Payment(String status, long creditCardNumber, long paymentDate, int orderItemId, int orderId) {
 		this.setStatus(status);
 		this.setCreditCardNumber(creditCardNumber);
 		this.setPaymentDate(paymentDate);
+		this.setOrderId(orderId);
+		this.setOrderItemId(orderItemId);
 	}
 	
 	public Payment(int id, String status, long creditCardNumber, long paymentDate) {
@@ -71,6 +63,22 @@ public class Payment {
 		this.paymentDate = paymentDate;
 	}
 	
+	public int getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
+
+	public int getOrderItemId() {
+		return orderItemId;
+	}
+
+	public void setOrderItemId(int orderItemId) {
+		this.orderItemId = orderItemId;
+	}
+
 	@Override
 	public String toString() {
 		return "Payment{"
