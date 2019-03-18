@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.invillia.acme.model.Order;
+import com.invillia.acme.model.OrderItem;
+import com.invillia.acme.model.Payment;
+import com.invillia.acme.util.Constants;
 
 public class OrderData {
 
@@ -21,20 +24,11 @@ public class OrderData {
 	
 	public OrderData() {
 		ordersList = new ArrayList<Order>();
-		ordersList.add(new Order(1, "Endereço 1", (new Date()).getTime(), "Processando"));
-		ordersList.add(new Order(2, "Endereço 2", (new Date()).getTime(), "Cancelado"));
-		ordersList.add(new Order(3, "Endereço 3", (new Date()).getTime(), "Concluido"));
-		ordersList.add(new Order(4, "Endereço 4", (new Date()).getTime(), "Concluido"));
-		ordersList.add(new Order(5, "Endereço 5", (new Date()).getTime(), "Processando"));
-	}
-	
-	/**
-	 * Returns all orders registered on BD
-	 * 
-	 * @return A list of all orders
-	 */
-	public List<Order> fetchAllOrders(){
-		return ordersList;
+		ordersList.add(new Order(1, "Endereço 1", (new Date()).getTime(), "Processando", new ArrayList<OrderItem>(), new Payment()));
+		ordersList.add(new Order(2, "Endereço 2", (new Date()).getTime(), "Cancelado", new ArrayList<OrderItem>(), new Payment()));
+		ordersList.add(new Order(3, "Endereço 3", (new Date()).getTime(), "Concluido", new ArrayList<OrderItem>(), new Payment()));
+		ordersList.add(new Order(4, "Endereço 4", (new Date()).getTime(), "Concluido", new ArrayList<OrderItem>(), new Payment()));
+		ordersList.add(new Order(5, "Endereço 5", (new Date()).getTime(), "Processando", new ArrayList<OrderItem>(), new Payment()));
 	}
 	
 	/**
@@ -63,21 +57,48 @@ public class OrderData {
         ordersList.add(newOrder);
         return true;
     }
+    
+    /**
+     * 
+     * Used to create a payment for a specific order
+     * 
+     * @param payment Payment to be added into the order
+     * @param orderId Id of the order
+     * @return The modified order
+     */
+    public Order createPaymentForAnOrder(Payment payment, int orderId) {
+    	for(Order order: ordersList) {
+            if(order.getId() == orderId) {
+                int orderIndex = ordersList.indexOf(order);
+                order.setPayment(payment);
+                ordersList.set(orderIndex, order);
+                return order;
+            }
+
+        }
+    	
+    	return null;
+    }
 
     /**
      * 
-     * Used to update a pre-existing order
+     * Used to refund a pre-existing order
      * 
-     * @param modifiedOrder Modified order used to update the BD
+     * @param orderId Id of the order to be refund
      * @return Returns the modified order
      */
-    public Order updateOrder(Order modifiedOrder) {
+    public Order refundOrder(int orderId) {
         for(Order order: ordersList) {
-            if(order.getId() == modifiedOrder.getId()) {
+            if(order.getId() == orderId && order.getPayment() != null) {
+            	long currentDate = (new Date()).getTime();
+            	long diff = currentDate - order.getPayment().getPaymentDate();
+            	long diffDays = diff / (24 * 60 * 60 * 1000);
+            	
+            	if(diffDays <= 10 && order.getPayment().getStatus().equals(Constants.CONFIRMED_STATUS)) { 
+            		order.setStatus(Constants.REFUND_STATUS);
+            	}
+            	
                 int orderIndex = ordersList.indexOf(order);
-                order.setAddress(modifiedOrder.getAddress());
-                order.setConfirmationDate(modifiedOrder.getConfirmationDate());
-                order.setStatus(modifiedOrder.getStatus());
                 ordersList.set(orderIndex, order);
                 return order;
             }
@@ -86,28 +107,39 @@ public class OrderData {
 
         return null;
     }
-
+    
     /**
      * 
-     * Used to delete an specific order from the list
+     * Used to refund a pre-existing order item
      * 
-     * @param id Id of the order to be deleted
-     * @return Returns TRUE if success or FALSE if it fails
+     * @param orderId Id of the order that contains the order item to be refund
+     * @param orderItemId Id of the order item to be refund
+     * @return Returns the modified order
      */
-    public boolean deleteOrder(int id){
-        int orderIndex = -1;
+    public Order refundOrderItem(int orderId, int orderItemId) {
         for(Order order: ordersList) {
-            if(order.getId() == id) {
-            	orderIndex = ordersList.indexOf(order);
-                break;
+            if(order.getId() == orderId) {
+            	for(OrderItem orderItem: order.getOrderItems()) {
+            		if(orderItem.getId() == orderItemId && orderItem.getPayment() != null) {
+            			long currentDate = (new Date()).getTime();
+                    	long diff = currentDate - orderItem.getPayment().getPaymentDate();
+                    	long diffDays = diff / (24 * 60 * 60 * 1000);
+                    	
+                    	if(diffDays <= 10 && orderItem.getPayment().getStatus().equals(Constants.CONFIRMED_STATUS)) { 
+                    		orderItem.getPayment().setStatus(Constants.REFUND_STATUS);
+                    	}
+                    	
+                        int orderIndex = ordersList.indexOf(order);
+                        ordersList.set(orderIndex, order);
+                        return order;
+            		}
+            	}
+            	
             }
+
         }
-        
-        if(orderIndex > -1){
-        	ordersList.remove(orderIndex);
-        	return true;
-        }
-        
-        return false;
+
+        return null;
     }
+
 }

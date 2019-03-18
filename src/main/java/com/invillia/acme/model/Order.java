@@ -1,19 +1,26 @@
 package com.invillia.acme.model;
 
+import java.util.List;
+
 public class Order {
 	
 	private int id;
 	private String address;
 	private long confirmationDate;
 	private String status;
+	private List<OrderItem> orderItems;
+	private Payment payment;
 	
 	public Order() {}
 	
-	public Order(int id, String address, long confirmationDate, String status) {
+	public Order(int id, String address, long confirmationDate, String status, List<OrderItem> orderItems, 
+			Payment payment) {
 		this.setId(id);
 		this.setAddress(address);
 		this.setConfirmationDate(confirmationDate);
 		this.setStatus(status);
+		this.setOrderItems(orderItems);
+		this.setPayment(payment);
 	}
 	
 	public int getId() {
@@ -48,6 +55,22 @@ public class Order {
 		this.status = status;
 	}
 	
+	public List<OrderItem> getOrderItems() {
+		return orderItems;
+	}
+
+	public void setOrderItems(List<OrderItem> orderItems) {
+		this.orderItems = orderItems;
+	}
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
+
 	@Override
 	public String toString() {
 		return "Order{"

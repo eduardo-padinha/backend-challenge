@@ -6,14 +6,16 @@ public class OrderItem {
 	private String description;
 	private double unitPrice;
 	private int quantity;
+	private Payment payment;
 	
 	public OrderItem() {}
 	
-	public OrderItem(int id, String description, double unitPrice, int quantity) {
+	public OrderItem(int id, String description, double unitPrice, int quantity, Payment payment) {
 		this.setId(id);
 		this.setDescription(description);
 		this.setUnitPrice(unitPrice);
 		this.setQuantity(quantity);
+		this.setPayment(payment);
 	}
 	
 	public int getId() {
@@ -46,6 +48,14 @@ public class OrderItem {
 	
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+	
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
 	}
 	
 	@Override
