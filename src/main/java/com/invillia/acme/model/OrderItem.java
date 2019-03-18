@@ -2,16 +2,26 @@ package com.invillia.acme.model;
 
 public class OrderItem {
 
+	private int id;
 	private String description;
 	private double unitPrice;
 	private int quantity;
 	
 	public OrderItem() {}
 	
-	public OrderItem(String description, double unitPrice, int quantity) {
+	public OrderItem(int id, String description, double unitPrice, int quantity) {
+		this.setId(id);
 		this.setDescription(description);
 		this.setUnitPrice(unitPrice);
 		this.setQuantity(quantity);
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	public String getDescription() {
@@ -41,6 +51,7 @@ public class OrderItem {
 	@Override
 	public String toString() {
 		return "OrderItem{"
+				+ "id=" + id
 				+ "description=" + description +
 				", unitPrice=" + unitPrice +
 				", quantity=" + quantity +

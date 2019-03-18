@@ -2,16 +2,26 @@ package com.invillia.acme.model;
 
 public class Payment {
 
+	private int id;
 	private String status;
 	private long creditCardNumber;
 	private long paymentDate;
 	
 	public Payment() {}
 	
-	public Payment(String status, long creditCardNumber, long paymentDate) {
+	public Payment(int id, String status, long creditCardNumber, long paymentDate) {
+		this.setId(id);
 		this.setStatus(status);
 		this.setCreditCardNumber(creditCardNumber);
 		this.setPaymentDate(paymentDate);
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	public String getStatus() {
@@ -41,6 +51,7 @@ public class Payment {
 	@Override
 	public String toString() {
 		return "Payment{"
+				+ "id=" + id
 				+ "status=" + status +
 				", creditCardNumber=" + creditCardNumber +
 				", paymentDate=" + paymentDate +

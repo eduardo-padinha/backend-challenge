@@ -2,18 +2,28 @@ package com.invillia.acme.model;
 
 public class Order {
 	
+	private int id;
 	private String address;
 	private long confirmationDate;
 	private String status;
 	
 	public Order() {}
 	
-	public Order(String address, long confirmationDate, String status) {
+	public Order(int id, String address, long confirmationDate, String status) {
+		this.setId(id);
 		this.setAddress(address);
 		this.setConfirmationDate(confirmationDate);
 		this.setStatus(status);
 	}
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getAddress() {
 		return address;
 	}
@@ -41,6 +51,7 @@ public class Order {
 	@Override
 	public String toString() {
 		return "Order{"
+				+ "id=" + id 
 				+ "address=" + address +
 				", confirmationDate=" + confirmationDate +
 				", status=" + status +
